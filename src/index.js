@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ReactFCCtest from 'react-fcctest';
 
 class App extends React.Component{
   render(){
     return(
-      <h1>Calculator</h1>
+      <div className="app__container">
+        <ReactFCCtest />
+      </div> 
     )
   }
 }
