@@ -6,7 +6,7 @@ import "./styles.css";
 
 class App extends React.Component {
   state = {
-    sum: "",
+    formula: "",
     currentValue: "",
     prevValue: "",
     currentOperator: "",
@@ -20,7 +20,7 @@ class App extends React.Component {
     }
 
     this.setState({
-      sum: this.state.sum + e.target.value,
+      formula: this.state.formula + e.target.value,
       currentValue: this.state.currentValue + e.target.value,
     });
   };
@@ -29,7 +29,7 @@ class App extends React.Component {
     // check if the currentValue already includes a decimal point
     if(!this.state.currentValue.includes(".")){
       this.setState({
-        sum: this.state.sum + e.target.value,
+        formula: this.state.formula + e.target.value,
         currentValue: this.state.currentValue + e.target.value,
       });
     }
@@ -37,80 +37,64 @@ class App extends React.Component {
       //if you click a decimal point and there's no currentValue, add a zero before the decimal point
     if(this.state.currentValue === ""){
       this.setState({
-        sum: "0" + e.target.value,
+        formula: "0" + e.target.value,
         currentValue: "0" + e.target.value,
       })
     }
   };
 
   handleOperator = e => {
-    this.setState({
-      sum: this.state.sum + e.target.value,
-      currentOperator: e.target.value,
-      prevValue: this.state.currentValue,
-      currentValue: "",
-    });
+
+    //If 2 or more operators are entered consecutively, the operation performed should be the last operator entered (excluding the negative (-) sign.
+    if(/[\+\*\/]$/.test(this.state.formula) && e.target.value !== "-"){
+      this.setState({
+        formula: this.state.formula.slice(0, -1) + e.target.value,
+        currentOperator: e.target.value,
+      })      
+    } 
+
+    else if(this.state.formula === "" && e.target.value === "-"){
+      this.setState({
+        formula: "-",
+        currentValue: "-"
+      })
+    }
+
+    else {
+      this.setState({
+        formula: this.state.formula + e.target.value,
+        currentOperator: e.target.value,
+        prevValue: this.state.currentValue,
+        currentValue: "",
+      });
+    }
+
+
   };
 
   handleClear = () => {
     this.setState({
-      sum: "",
+      formula: "",
       currentValue: "",
       prevValue: ""
     });
   };
 
   handleCalculation = () => {
-    if (this.state.currentOperator === "+") {
-      this.add();
-    }
-    if (this.state.currentOperator === "-") {
-      this.subtract();
-    }
-    if (this.state.currentOperator === "*") {
-      this.multiply();
-    }
-    if (this.state.currentOperator === "/") {
-      this.divide();
-    }
-  };
+    const result = eval(this.state.formula);
 
-  add = () => {
     this.setState({
-      currentValue:
-        parseFloat(Number(this.state.prevValue)) +
-        parseFloat(Number(this.state.currentValue))
-    });
-  };
-  subtract = () => {
-    this.setState({
-      currentValue:
-        parseFloat(Number(this.state.prevValue)) -
-        parseFloat(Number(this.state.currentValue))
-    });
-  };
-
-  multiply = () => {
-    this.setState({
-      currentValue:
-        parseFloat(Number(this.state.prevValue)) *
-        parseFloat(Number(this.state.currentValue))
-    });
-  };
-
-  divide = () => {
-    this.setState({
-      currentValue:
-        parseFloat(Number(this.state.prevValue)) /
-        parseFloat(Number(this.state.currentValue))
-    });
+      currentValue: result,
+      formula: result,
+      prevValue: result
+    })
   };
 
   render() {
     return (
       <div className="app__container">
-        <ReactFCCtest />
-        <div id="display-sum">{this.state.sum}</div>
+      {/* <ReactFCCtest /> */}
+        <div id="display-formula">{this.state.formula}</div>
         <div id="display">{this.state.currentValue === "" ? 0 : this.state.currentValue}</div>
         <button id="clear" onClick={this.handleClear}>
           AC
