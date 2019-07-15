@@ -22,7 +22,7 @@ body {
 
 .app__container{
   width: 400px;
-  height: 600px;
+  height: 700px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(7, 1fr);
@@ -37,6 +37,15 @@ body {
   font-size: 2rem;
   font-weight: 700;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#display-formula {
+  font-size: 1.2rem;
+  grid-column: 1 / 5;
+  text-align: right;
+  padding-right: 20px;
+  padding-top: 20px;
+  width: 100%;
 }
 
 #clear {
