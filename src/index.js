@@ -44,9 +44,14 @@ class App extends React.Component {
   };
 
   handleOperator = e => {
+    const endOperator = /[\+\*\/]$/;
+
+    if(this.state.formula === "" && e.target.value !== "-"){
+      return;
+    }
 
     //If 2 or more operators are entered consecutively, the operation performed should be the last operator entered (excluding the negative (-) sign.
-    if(/[\+\*\/]$/.test(this.state.formula) && e.target.value !== "-"){
+    if(endOperator.test(this.state.formula) && e.target.value !== "-"){
       this.setState({
         formula: this.state.formula.slice(0, -1) + e.target.value,
         currentOperator: e.target.value,
@@ -95,7 +100,10 @@ class App extends React.Component {
       <div className="app__container">
       {/* <ReactFCCtest /> */}
         <div id="display-formula">{this.state.formula}</div>
-        <div id="display">{this.state.currentValue === "" ? 0 : this.state.currentValue}</div>
+        <div id="display">
+         {this.state.currentValue === "" ? 
+         0 : this.state.currentValue}
+        </div>
         <button id="clear" onClick={this.handleClear}>
           AC
         </button>
