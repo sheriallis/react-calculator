@@ -65,6 +65,12 @@ button {
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 1.2rem;
+  transition: background-color .2s ease-in-out;
+}
+
+button:hover{
+  background-color: #EFEFEF;
+  cursor: pointer;
 }
 
 .operator{
@@ -72,14 +78,26 @@ button {
   background-color: #28D5C6;
 }
 
+.operator:hover{
+  background-color: #2CDECF;
+}
+
 #clear {
   background-color: #DB425F;
   color: #fff;
 }
 
+#clear:hover{
+  background-color: #EF4969;
+}
+
 #equals {
   background-color: #004884;
   color: #fff;
+}
+
+#equals:hover{
+  background-color: #055BA1;
 }
 
 #equals, #zero, #decimal {
